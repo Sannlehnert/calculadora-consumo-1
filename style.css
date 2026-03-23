@@ -1,35 +1,22 @@
-/* Esto es lo que Tailwind nos ahorrará después */
-html {
-    box-sizing: border-box;
-    background: #0000004d;
+/* Centrado perfecto */
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-}
-.input-field {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    height: 36px;
-    width: 142px;
+#lista-cargas {
+  max-height: 300px;
+  overflow-y: auto;
 }
 
-#btn {
-    height: 36px;
-    padding: 0px 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    cursor: pointer;
+li {
+  transition: background-color 0.2s;
 }
 
-#btn:hover {
-    border: 1px solid #8cf885;
-    scale: 1.02
+li:hover {
+  background-color: #f3f4f6;
 }
-
-
-
