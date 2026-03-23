@@ -4,68 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fuel Pulse - Calculadora de Consumo</title>
+    <title>Calculadora de Nafta</title>
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
-    <!-- Fuente Inter -->
+    <!-- Fuente -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="min-h-screen flex items-center justify-center p-6 bg-gray-50">
-        <div class="w-full max-w-lg bg-white rounded-xl shadow-md p-6 border border-amber-200">
-            
-            <!-- Header simple -->
-            <div class="text-center mb-6">
-                <h1 class="text-3xl font-bold text-green-700 mb-2">Fuel Pulse</h1>
-                <p class="text-gray-600">Controlá el consumo de tus viajes largos</p>
-            </div>
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-200">
 
-            <!-- Formulario agregar carga -->
-            <div class="bg-amber-50 p-6 rounded-lg mb-6">
-                <h2 class="text-xl font-semibold text-green-700 mb-4">Nueva carga</h2>
-                <div class="grid grid-cols-1 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Km actual</label>
-                        <input type="number" id="km-actual" placeholder="12500" step="0.1" required
-                            class="w-full border border-gray-300 rounded p-3 focus:ring-2 focus:ring-green-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Litros</label>
-                        <input type="number" id="litros-carga" placeholder="45.5" step="0.01" required
-                            class="w-full border border-gray-300 rounded p-3 focus:ring-2 focus:ring-green-500">
-                    </div>
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-semibold text-green-700">Calculadora de Nafta</h1>
+            <p class="text-gray-500 mt-1">Registrá las cargas de tu viaje</p>
+        </div>
+
+        <!-- Formulario para agregar cargas múltiple -->
+        <div class="bg-amber-50 p-5 rounded-xl mb-6">
+
+            <h2 class="text-xl font-semibold text-green-700 mb-4">Registrar nueva carga</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kilometraje actual (km)</label>
+                    <input type="number" id="km-actual" placeholder="Ej: 12500" step="0.1" required
+                        class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500">
                 </div>
-                <button id="btn-agregar"
-                    class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-lg transition">
-                    + Agregar carga
-                </button>
-            </div>
-
-            <!-- Lista de cargas -->
-            <div class="mb-6">
-                <h2 class="text-xl font-semibold text-green-700 mb-3 flex justify-between">
-                    <span>Cargas</span>
-                    <span id="contador-cargas" class="text-sm bg-gray-200 px-3 py-1 rounded-full">0</span>
-                </h2>
-                <div id="lista-cargas" class="bg-gray-50 rounded-lg p-4 max-h-60 overflow-auto border">
-                    <p class="text-gray-500 text-center py-8 italic">No hay cargas. Agregá la primera</p>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Litros cargados (L)</label>
+                    <input type="number" id="litros-carga" placeholder="Ej: 45.5" step="0.01" required
+                        class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-green-500">
                 </div>
             </div>
+            <button id="btn-agregar"
+                class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-lg transition duration-200 shadow-sm">
+                + Agregar carga
+            </button>
 
-            <!-- Finalizar -->
-            <div class="flex flex-col sm:flex-row gap-4 pt-4 border-t">
-                <button id="btn-finalizar"
-                    class="flex-1 bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold py-3 px-4 rounded-lg transition">
-                    Finalizar y calcular consumo
-                </button>
-                <div id="resultado-final" class="text-sm text-gray-600 self-center">
-                </div>
+        </div>
+
+        <!-- Lista visual de cargas registradas -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-green-700 mb-3">
+                Cargas registradas <span id="contador-cargas" class="text-sm bg-gray-200 px-2 py-1 rounded">0</span>
+            </h2>
+            <div id="lista-cargas" class="bg-gray-50 rounded-lg p-3 max-h-64 overflow-y-auto border border-gray-200">
+                <p class="text-gray-400 text-center py-4">Todavía no hay cargas. Agregá la primera.</p>
+            </div>
+        </div>
+
+        <!-- Botón finalizar viaje -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
+            <button id="btn-finalizar"
+                class="w-full sm:w-auto bg-amber-400 text-gray-800 font-medium py-2 px-6 rounded-lg hover:bg-amber-500 transition duration-200 shadow-sm">
+                Finalizar viaje y calcular
+            </button>
+
+            <div id="resultado-final" class="text-sm text-gray-500 italic">
+                <!-- Acá aparece el resultado -->
             </div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>

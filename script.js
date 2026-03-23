@@ -19,17 +19,16 @@ function actualizarLista() {
     }
 
     let html = '<ul class="divide-y divide-gray-200">';
-    let i = 0;
-    cargas.forEach((carga) => {
-        i++;
+    cargas.forEach((carga, i) => {
         html += `
             <li class="py-2 flex justify-between">
-                <span>Carga ${i}</span>
+                <span>Carga ${i + 1}</span>
                 <span> ${carga.km} km</span>
                 <span> ${carga.litros} L</span>
             </li>
         `;
     });
+
     html += '</ul>';
     listaCargasDiv.innerHTML = html;
     contadorSpan.textContent = cargas.length;
@@ -41,7 +40,7 @@ function agregarCarga() {
     const litros = parseFloat(litrosCargaInput.value);
 
     if (isNaN(km) || isNaN(litros)) {
-        alert("Debe poner numeros validos en ambos campos.");
+        alert("Completa los campos con números validos.");
         return;
     }
     if (km <= 0) {
@@ -89,12 +88,13 @@ function finalizarViaje() {
     const consumoFormateado = consumo.toFixed(2);
 
     resultadoFinalDiv.innerHTML = `
-        <div class="bg-green-50 p-3 rounded-lg border border-ecoGreen/30 text-center">
-            <p class="font-semibold text-ecoGreen">Viaje finalizado</p>
+        <div class="bg-green-50 p-3 rounded-lg border border-green-200 text-center">
+            <p class="font-semibold text-green-700">Viaje finalizado</p>
             <p class="text-sm">Distancia total: <strong>${distanciaTotal.toFixed(1)} km</strong></p>
             <p class="text-sm">Litros totales: <strong>${totalLitros.toFixed(2)} L</strong></p>
-            <p class="text-md font-bold text-ecoGreen mt-1">Consumo promedio: ${consumoFormateado} L/100km</p>
+            <p class="text-lg font-bold text-green-700 mt-1">Consumo promedio: ${consumoFormateado} L/100km</p>
         </div>
+
     `;
 }
 
