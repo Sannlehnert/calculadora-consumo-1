@@ -1,21 +1,21 @@
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-  background-color: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
 }
 
 #lista-cargas {
-  max-height: 300px;
-  overflow-y: auto;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 li {
-  transition: background-color 0.2s;
+    transition: background-color 0.2s;
 }
 
 li:hover {
-  background-color: #f3f4f6;
+    background-color: #f3f4f6;
 }
