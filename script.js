@@ -1,37 +1,103 @@
-// 1. Seleccionamos los elementos del DOM y los guardamos en constantes
-// Usamos getElementById para vincular el HTML con nuestro código JS
-const formulario = document.getElementById('calc-form');
-const inputKmInicio = document.getElementById('km-inicio');
-const inputKmFin = document.getElementById('km-fin');
-const inputLitros = document.getElementById('litros');
-const divResultado = document.getElementById('resultado');
+// Array para guardar las cargas del viaje
+let cargas = [];
 
-formulario.addEventListener('submit', function(event){
-    event.preventDefault();
-    const kmInicio = parseFloat(inputKmInicio.value);
-    const kmFin = parseFloat(inputKmFin.value);
-    const litros = parseFloat(inputLitros.value);
+// Elementos del DOM
+const kmActualInput = document.getElementById('km-actual');
+const litrosCargaInput = document.getElementById('litros-carga');
+const btnAgregar = document.getElementById('btn-agregar');
+const btnFinalizar = document.getElementById('btn-finalizar');
+const listaCargasDiv = document.getElementById('lista-cargas');
+const contadorSpan = document.getElementById('contador-cargas');
+const resultadoFinalDiv = document.getElementById('resultado-final');
 
-    const distancia = kmFin - kmInicio;
-
-    if (distancia <= 0) {
-        // Si la distancia es 0 o negativa, mostramos un error y salimos de la función
-        divResultado.innerHTML = '<p style="color: red;">Error: Los Km finales deben ser mayores a los iniciales.</p>';
-        return; // El return vacío detiene la ejecución aquí
+// Actualizar la lista visual
+function actualizarLista() {
+    if (cargas.length === 0) {
+        listaCargasDiv.innerHTML = '<p class="text-gray-400 text-center py-4">Todavía no hay cargas. Agregá la primera.</p>';
+        contadorSpan.textContent = '0';
+        return;
     }
 
-    // Usamos la fórmula para obtener el consumo promedio cada 100 kilómetros
-    const consumo = (litros / distancia) * 100;
+    let html = '<ul class="divide-y divide-gray-200">';
+    cargas.forEach((carga, i) => {
+        html += `
+            <li class="py-2 flex justify-between">
+                <span>Carga ${i + 1}</span>
+                <span> ${carga.km} km</span>
+                <span> ${carga.litros} L</span>
+            </li>
+        `;
+    });
 
-    // 8. Formateamos el resultado para que solo tenga 2 decimales usando .toFixed(2)
-    const resultadoFormateado = consumo.toFixed(2);
+    html += '</ul>';
+    listaCargasDiv.innerHTML = html;
+    contadorSpan.textContent = cargas.length;
+}
 
-    divResultado.innerHTML = `
-        <div class="success-message">
-            <p>Distancia recorrida: <strong>${distancia} km</strong></p>
-            <p>Consumo promedio: <strong>${resultadoFormateado} L/100km</strong></p>
+// Agregar una carga
+function agregarCarga() {
+    const km = parseFloat(kmActualInput.value);
+    const litros = parseFloat(litrosCargaInput.value);
+
+    if (isNaN(km) || isNaN(litros)) {
+        alert("Completa los campos con números validos.");
+        return;
+    }
+    if (km <= 0) {
+        alert("El kilometraje tiene que ser mayor a cero.");
+        return;
+    }
+    if (litros <= 0) {
+        alert("Litros no pueden ser negativos.");
+        return;
+    }
+
+    // Guardar
+    cargas.push({ km: km, litros: litros });
+
+    // Limpiar inputs
+    kmActualInput.value = '';
+    litrosCargaInput.value = '';
+
+    actualizarLista();
+    resultadoFinalDiv.innerHTML = ''; // limpiar resultado anterior
+}
+
+//Consumo promedio L/100km
+function finalizarViaje() {
+    if (cargas.length === 0) {
+        alert('No hay cargas registradas. Agrega al menos una.');
+        return;
+    }
+
+    const kmInicial = cargas[0].km;     // primer km del viaje
+    const kmFinal = cargas[cargas.length - 1].km;  // último km
+    const distanciaTotal = kmFinal - kmInicial;
+
+    if (distanciaTotal <= 0) {
+        alert("Error: distancia invalida. Revisa los kms.");
+        return;
+    }
+
+    let totalLitros = 0;
+    for (let i = 0; i < cargas.length; i++) {  // sumo todos los litros del array
+        totalLitros += cargas[i].litros;
+    }
+
+    const consumo = (totalLitros / distanciaTotal) * 100;  // fórmula L/100km
+    const consumoFormateado = consumo.toFixed(2);
+
+    resultadoFinalDiv.innerHTML = `
+        <div class="bg-green-50 p-3 rounded-lg border border-green-200 text-center">
+            <p class="font-semibold text-green-700">Viaje finalizado</p>
+            <p class="text-sm">Distancia total: <strong>${distanciaTotal.toFixed(1)} km</strong></p>
+            <p class="text-sm">Litros totales: <strong>${totalLitros.toFixed(2)} L</strong></p>
+            <p class="text-lg font-bold text-green-700 mt-1">Consumo promedio: ${consumoFormateado} L/100km</p>
         </div>
-    `;
 
-    //formulario.reset(); 
-});
+    `;
+}
+
+// Eventos
+btnAgregar.addEventListener('click', agregarCarga);
+btnFinalizar.addEventListener('click', finalizarViaje);
